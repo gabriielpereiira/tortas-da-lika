@@ -33,7 +33,7 @@ export async function POST(request) {
         forma_entrega: forma_entrega || 'retirada',
         endereco_entrega: endereco_entrega || null,
         valor_frete: Number(valor_frete || 0),
-        status: 'aguardando_pagamento',
+        status: 'pendente',
         observacoes: observacoes || null,
         criado_em: new Date().toISOString(),
         atualizado_em: new Date().toISOString()

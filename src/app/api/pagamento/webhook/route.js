@@ -29,11 +29,11 @@ export async function POST(request) {
       )
 
       const mpStatus = paymentData.status
-      let orderStatus = 'aguardando_pagamento'
-      if (mpStatus === 'approved') orderStatus = 'pago'
-      else if (mpStatus === 'rejected' || mpStatus === 'refused') orderStatus = 'recusado'
+      let orderStatus = 'pendente'
+      if (mpStatus === 'approved') orderStatus = 'confirmado'
+      else if (mpStatus === 'rejected' || mpStatus === 'refused') orderStatus = 'cancelado'
       else if (mpStatus === 'cancelled') orderStatus = 'cancelado'
-      else if (mpStatus === 'refunded') orderStatus = 'reembolsado'
+      else if (mpStatus === 'refunded') orderStatus = 'cancelado'
 
       await supabase
         .from('pedidos')

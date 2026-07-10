@@ -9,12 +9,12 @@ export async function POST(request) {
       return Response.json({ success: false, erro: 'ID do pedido obrigatorio' }, { status: 400 })
     }
 
-    let orderStatus = 'aguardando_pagamento'
-    if (status_pagamento === 'approved') orderStatus = 'pago'
-    else if (status_pagamento === 'rejected' || status_pagamento === 'refused') orderStatus = 'recusado'
+    let orderStatus = 'pendente'
+    if (status_pagamento === 'approved') orderStatus = 'confirmado'
+    else if (status_pagamento === 'rejected' || status_pagamento === 'refused') orderStatus = 'cancelado'
     else if (status_pagamento === 'cancelled') orderStatus = 'cancelado'
-    else if (status_pagamento === 'refunded') orderStatus = 'reembolsado'
-    else if (status_pagamento === 'pending' || status_pagamento === 'in_process') orderStatus = 'aguardando_pagamento'
+    else if (status_pagamento === 'refunded') orderStatus = 'cancelado'
+    else if (status_pagamento === 'pending' || status_pagamento === 'in_process') orderStatus = 'pendente'
 
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
