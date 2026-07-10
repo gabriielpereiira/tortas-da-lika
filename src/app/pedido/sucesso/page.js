@@ -1,17 +1,29 @@
 'use client'
-
 import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
 function PedidoSucessoContent() {
   const searchParams = useSearchParams()
-
   const paymentId = searchParams.get('payment_id')
   const status = searchParams.get('status')
   const externalReference = searchParams.get('external_reference')
-
   const isApproved = status === 'approved'
+
+  useEffect(() => {
+    if (isApproved && externalReference) {
+      fetch('/api/pedido/confirmar-pagamento', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pedidoId: externalReference,
+          paymentId,
+          status
+        })
+      }).catch(err => console.error('Erro ao confirmar pagamento:', err))
+    }
+  }, [isApproved, externalReference, paymentId, status])
 
   const containerStyle = {
     minHeight: '100vh',
