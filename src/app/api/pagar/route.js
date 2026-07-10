@@ -54,7 +54,10 @@ export async function POST(request) {
       })
     }
 
-    const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+    // Tenta pegar a URL real do servidor em vez de depender so da variavel de ambiente
+    const protocol = request.headers.get('x-forwarded-proto') || 'https'
+    const host = request.headers.get('host') || 'tortas-da-lika.vercel.app'
+    const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`
 
     const client = new MercadoPagoConfig({ accessToken })
     const preference = new Preference(client)
