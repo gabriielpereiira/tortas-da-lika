@@ -71,7 +71,7 @@ export async function POST(request) {
           phone: cliente_telefone ? { number: cliente_telefone } : undefined,
         },
         back_urls: {
-          success: `${BASE_URL}/pedido/sucesso`,
+          success: `${BASE_URL}/api/pedido/sucesso`,
           failure: `${BASE_URL}/pedido/fracasso`,
           pending: `${BASE_URL}/pedido/pendente`,
         },
