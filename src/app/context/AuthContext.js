@@ -77,14 +77,32 @@ export function AuthProvider({ children }) {
   }
 
   async function cadastrar(email, senha) {
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: senha,
-      options: {
-        emailRedirectTo: `${window.location.origin}/login`,
-      },
-    })
-    return { data, error }
+    const url = 'https://nqjkcqloenliiftcgvro.supabase.co/auth/v1/signup'
+    const apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xamtjcWxvZW5saWlmdGNndnJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE4Nzk0ODUsImV4cCI6MjA5NzQ1NTQ4NX0.lnqoY32fPB9eQP0xKlDeetw4iOUblsoy_mDQk4UpJPg'
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': apiKey,
+        },
+        body: JSON.stringify({
+          email: email,
+          password: senha,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        return { data: null, error: { message: data.msg || data.error || 'Erro ao criar conta' } }
+      }
+
+      return { data, error: null }
+    } catch (err) {
+      return { data: null, error: { message: err.message || 'Erro ao criar conta' } }
+    }
   }
 
   async function login(email, senha) {
