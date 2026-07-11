@@ -342,7 +342,7 @@ export default function CarrinhoSidebar() {
                   placeholder="digite o cupom aqui" maxLength={20}
                   style={{
                     flex: 1, padding: '10px 14px', borderRadius: '8px',
-                    border: '1px solid ' + COLORS.border, fontSize: '10px',
+                    border: '1px solid ' + COLORS.border, fontSize: '11px',
                     fontFamily: SANS, color: COLORS.dark, outline: 'none',
                     textTransform: 'uppercase', boxSizing: 'border-box',
                   }}
