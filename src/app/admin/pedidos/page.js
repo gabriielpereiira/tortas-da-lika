@@ -9,22 +9,22 @@ const SERIF = '"Playfair Display", Georgia, serif'
 const SANS = '"Plus Jakarta Sans", sans-serif'
 
 const COLORS = {
-background: '#0f172a',
-white: '#1e293b',
-primary: '#f59e0b',
-primaryDark: '#d97706',
-secondary: '#f59e0b',
-accent: '#fbbf24',
-text: '#f1f5f9',
-textLight: '#94a3b8',
-border: '#334155',
-success: '#22c55e',
-warning: '#eab308',
-danger: '#ef4444',
-info: '#3b82f6',
-lightGray: '#1e293b',
-mediumGray: '#334155',
-darkGray: '#64748b'
+background: '#f7f3ee',
+white: '#ffffff',
+primary: '#8b5e3c',
+primaryDark: '#6e4228',
+secondary: '#c4956a',
+accent: '#b8864e',
+text: '#2d1b0e',
+textLight: '#8b7d72',
+border: '#ddd0c4',
+success: '#5f8b5e',
+warning: '#d49a3a',
+danger: '#cc5c5c',
+info: '#5f86a8',
+lightGray: '#faf7f4',
+mediumGray: '#ece4da',
+darkGray: '#a89988'
 }
 const STATUS_LABELS = {
   pendente: 'Aguardando pagamento',
