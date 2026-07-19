@@ -5,8 +5,6 @@ import { useAuth } from '../app/context/AuthContext'
 import { storeConfig } from '@/config/store'
 import { useRouter, usePathname } from 'next/navigation'
 import { useCarrinho } from '../app/context/CarrinhoContext'
-import { useAuth } from '../app/context/AuthContext'
-import { storeConfig } from '@/config/store'
 
 const SANS = '"Plus Jakarta Sans", sans-serif'
 const SERIF = '"Playfair Display", Georgia, serif'
@@ -17,15 +15,13 @@ export default function Header() {
   const { totalItens, setAberto } = useCarrinho()
   const { usuario, logout } = useAuth()
   const emailsAdmin = storeConfig.admin.adminEmails
+  const isAdmin = usuario && emailsAdmin.includes(usuario.email)
 
   const [scrolled, setScrolled] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [logoHover, setLogoHover] = useState(false)
-const { usuario } = useAuth()
-const emailsAdmin = storeConfig.admin.adminEmails
-const isAdmin = usuario && emailsAdmin.includes(usuario.email)
 
   useEffect(() => {
     setLoaded(true)
