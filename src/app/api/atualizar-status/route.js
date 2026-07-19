@@ -1,6 +1,35 @@
 import { createClient } from '@supabase/supabase-js'
-import { Resend } from 'resend'
 import { emailSaiuEntrega } from '@/lib/emailSaiuEntrega'
+
+async function enviarEmailBrevo({ para, assunto, html }) {
+  try {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': process.env.BREVO_API_KEY
+      },
+      body: JSON.stringify({
+        sender: { name: 'Tortas da Lika', email: 'tortasdalika@outlook.com' },
+        to: [{ email: para }],
+        subject: assunto,
+        htmlContent: html
+      })
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('Erro no Brevo:', response.status, errorText)
+      return false
+    }
+
+    console.log('Email enviado com sucesso via Brevo')
+    return true
+  } catch (err) {
+    console.error('Erro ao enviar email via Brevo:', err)
+    return false
+  }
+}
 
 export async function POST(request) {
   try {
@@ -14,14 +43,12 @@ export async function POST(request) {
       process.env.SUPABASE_SERVICE_ROLE_KEY
     )
 
-    // Busca dados do pedido ANTES de atualizar (precisa do email do cliente)
     const { data: pedido } = await supabase
       .from('pedidos')
       .select('nome_cliente, email_cliente')
       .eq('id', pedidoId)
       .single()
 
-    // Atualiza o status do pedido
     await supabase
       .from('pedidos')
       .update({
@@ -30,25 +57,18 @@ export async function POST(request) {
       })
       .eq('id', pedidoId)
 
-    // Se for "saiu_entrega", dispara email
     if (novoStatus === 'saiu_entrega') {
-      try {
-        const resend = new Resend(process.env.RESEND_API_KEY)
+      if (pedido?.email_cliente) {
+        const html = emailSaiuEntrega({
+          nomeCliente: pedido.nome_cliente || pedido.email_cliente.split('@')[0],
+          pedidoId
+        })
 
-        if (pedido?.email_cliente) {
-          const result = await resend.emails.send({
-            from: 'Tortas da Lika <onboarding@resend.dev>',
-            to: pedido.email_cliente,
-            subject: 'Seu pedido saiu para entrega - Tortas da Lika',
-            html: emailSaiuEntrega({
-              nomeCliente: pedido.nome_cliente || pedido.email_cliente.split('@')[0],
-              pedidoId
-            })
-          })
-          console.log('Email saiu_entrega enviado:', result)
-        }
-      } catch (emailError) {
-        console.error('Erro ao enviar email de saiu_entrega:', emailError)
+        await enviarEmailBrevo({
+          para: pedido.email_cliente,
+          assunto: 'Seu pedido saiu para entrega - Tortas da Lika',
+          html
+        })
       }
     }
 
