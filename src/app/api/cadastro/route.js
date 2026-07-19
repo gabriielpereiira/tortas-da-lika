@@ -1,4 +1,4 @@
-@"
+$c = @'
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -35,4 +35,5 @@ return Response.json({ user: data })
 return Response.json({ error: 'Erro interno do servidor' }, { status: 500 })
 }
 }
-"@ | Out-File -FilePath "src/app/api/cadastro/route.js" -Encoding UTF8
+'@
+Set-Content -Path "src/app/api/cadastro/route.js" -Value $c -Encoding UTF8
