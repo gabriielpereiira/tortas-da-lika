@@ -1,6 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useAuth } from '../app/context/AuthContext'
+import { storeConfig } from '@/config/store'
 import { useRouter, usePathname } from 'next/navigation'
 import { useCarrinho } from '../app/context/CarrinhoContext'
 import { useAuth } from '../app/context/AuthContext'
@@ -21,6 +23,9 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [logoHover, setLogoHover] = useState(false)
+const { usuario } = useAuth()
+const emailsAdmin = storeConfig.admin.adminEmails
+const isAdmin = usuario && emailsAdmin.includes(usuario.email)
 
   useEffect(() => {
     setLoaded(true)
@@ -36,7 +41,6 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const isAdmin = usuario && emailsAdmin.includes(usuario.email)
   const userInitial = usuario?.email?.charAt(0)?.toUpperCase() || '?'
 
   const navLinks = [
