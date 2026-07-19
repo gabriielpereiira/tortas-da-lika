@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+﻿import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -11,7 +11,7 @@ if (!email || !senha) {
   return Response.json({ error: 'Email e senha sao obrigatorios' }, { status: 400 })
 }
 
-const response = await fetch(${supabaseUrl}/auth/v1/signup, {
+const response = await fetch(`${supabaseUrl}/auth/v1/signup`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
