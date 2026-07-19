@@ -9,7 +9,6 @@ const SERIF = '"Playfair Display", Georgia, serif'
 const SANS = '"Plus Jakarta Sans", sans-serif'
 
 const COLORS = {
-const COLORS = {
 background: '#0f172a',
 white: '#1e293b',
 primary: '#f59e0b',
