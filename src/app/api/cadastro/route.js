@@ -1,4 +1,3 @@
-$c = @'
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -12,7 +11,7 @@ if (!email || !senha) {
   return Response.json({ error: 'Email e senha sao obrigatorios' }, { status: 400 })
 }
 
-const response = await fetch(`${supabaseUrl}/auth/v1/signup`, {
+const response = await fetch(${supabaseUrl}/auth/v1/signup, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -35,5 +34,3 @@ return Response.json({ user: data })
 return Response.json({ error: 'Erro interno do servidor' }, { status: 500 })
 }
 }
-'@
-Set-Content -Path "src/app/api/cadastro/route.js" -Value $c -Encoding UTF8

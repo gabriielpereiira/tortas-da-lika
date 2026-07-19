@@ -1,4 +1,3 @@
-$c = @'
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -14,5 +13,3 @@ export function createServerSupabaseClient() {
     },
   })
 }
-'@
-Set-Content -Path "src/lib/supabaseClient.js" -Value $c -Encoding UTF8
